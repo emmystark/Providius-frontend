@@ -84,12 +84,12 @@ const ACTIVITY = [
 export default function DashboardPage() {
    const { text: greetingText, emoji } = useGreeting("Stark");
   return (
-    <div className="flex  h-screen bg-[#F7FAFC] overflow-hidden">
+    <div className="flex h-screen bg-[#F7FAFC] overflow-hidden">
       <Sidebar />
 
-      <main className="flex-1 px-24 overflow-y-auto">
+      <main className="flex-1 px-6 overflow-y-auto">
         {/* Header */}
-        <header className="bg-none mt-12 bg-[#FFFFFF1A]/10 backdrop-blur-sm  border-gray-100 px-8 py-5 flex items-center justify-between sticky top-0 z-10">
+        <header className="bg-none mt-[3.7%] bg-[#FFFFFF1A]/10 backdrop-blur-sm  border-gray-100 px-8 py-5 flex items-center justify-between sticky top-0 z-10">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">{greetingText} <span>{emoji}</span></h1>
             <p className="text-md text-gray-400 mt-0.5">{"Here's what's happening with your support today"}</p>

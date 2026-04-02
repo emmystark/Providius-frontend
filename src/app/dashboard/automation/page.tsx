@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Sidebar from "@/components/Sidebar";
+import Link from "next/dist/client/link";
 
 interface Rule {
   id: string;
@@ -78,7 +79,7 @@ function NewRuleModal({ onClose, onSave }: { onClose: () => void; onSave: (r: Ru
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-7">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-bold text-gray-900">Create New Rule</h2>
+          <h2 className="text-lg font-bold text-gray-900">Create New Automation Rule</h2>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition-colors">
             <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
               <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -90,12 +91,12 @@ function NewRuleModal({ onClose, onSave }: { onClose: () => void; onSave: (r: Ru
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1.5">Rule Name</label>
             <input value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Order Status Lookup"
-              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#14A085] focus:ring-2 focus:ring-[#14A085]/10" />
+              className="w-full border border-none bg-[#F9FAFB] rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#14A085] focus:ring-2 focus:ring-[#14A085]/10" />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1.5">Description</label>
             <input value={desc} onChange={(e) => setDesc(e.target.value)} placeholder="What does this rule do?"
-              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#14A085] focus:ring-2 focus:ring-[#14A085]/10" />
+              className="w-full border border-none rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#14A085] focus:ring-2 focus:ring-[#14A085]/10" />
           </div>
 
           {/* When → Then */}
@@ -103,18 +104,18 @@ function NewRuleModal({ onClose, onSave }: { onClose: () => void; onSave: (r: Ru
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">When (Trigger)</label>
               <input value={when} onChange={(e) => setWhen(e.target.value)} placeholder="Intent: track_order"
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#14A085] focus:ring-2 focus:ring-[#14A085]/10" />
+                className="w-full border border-none rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#14A085] focus:ring-2 focus:ring-[#14A085]/10" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">Then (Action)</label>
               <input value={then} onChange={(e) => setThen(e.target.value)} placeholder="Call API: orders/track"
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#14A085] focus:ring-2 focus:ring-[#14A085]/10" />
+                className="w-full border border-none rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#14A085] focus:ring-2 focus:ring-[#14A085]/10" />
             </div>
           </div>
         </div>
 
         <div className="flex justify-end gap-3 mt-7">
-          <button onClick={onClose} className="px-5 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-500 font-medium hover:border-gray-300 transition-colors">
+          <button onClick={onClose} className="px-5 py-2.5 border border-none rounded-xl text-sm text-gray-500 font-medium hover:border-gray-300 transition-colors">
             Cancel
           </button>
           <button onClick={save} className="px-6 py-2.5 bg-[#14A085] hover:bg-[#0d7a65] text-white font-semibold rounded-xl text-sm transition-colors">
@@ -170,8 +171,8 @@ export default function AutomationPage() {
               key={rule.id}
               className={`border-none rounded-2xl bg-white h p-5 py-12 transition-all ${
                 rule.status === "Draft"
-                  ? "border-gray-200 bg-gray-50 opacity-75"
-                  : "border-gray-200 bg-white hover:border-gray-300"
+                  ? "border-none bg-gray-50 opacity-75"
+                  : "border-none bg-white hover:border-gray-300"
               }`}
             >
               {/* Rule header */}
@@ -200,14 +201,23 @@ export default function AutomationPage() {
                       </svg>
                     </button>
                     {menuOpen === rule.id && (
-                      <div className="absolute right-0 top-8 bg-white border border-gray-200 rounded-xl shadow-lg py-1 z-20 min-w-[140px]" onClick={(e) => e.stopPropagation()}>
+                      <div className="absolute right-0 top-8 bg-white border border-none rounded-xl shadow-lg py-1 z-20 min-w-[140px]" onClick={(e) => e.stopPropagation()}>
                         <button onClick={() => { toggleStatus(rule.id); setMenuOpen(null); }}
                           className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                           {rule.status === "Active" ? "Pause" : "Activate"}
                         </button>
-                        <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                          Edit
-                        </button>
+                        {/* <Link href={`/dashboard/automation/rules/${rule.id}`}> */}
+                        <Link href={`/dashboard/automation/rules/`}>
+                          <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                            View Details
+                          </button>
+                        </Link>
+                        {/* <Link href={`/dashboard/automation/rules/${rule.id}/edit`}> */}
+                        <Link href={`/dashboard/automation/rules/`}>
+                          <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                            Edit
+                          </button>
+                        </Link>
                         <button onClick={() => { deleteRule(rule.id); setMenuOpen(null); }}
                           className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors">
                           Delete
@@ -254,7 +264,7 @@ export default function AutomationPage() {
 
           {/* Empty state */}
           {rules.length === 0 && (
-            <div className="text-center py-16 border-2 border-dashed border-gray-200 rounded-2xl">
+            <div className="text-center py-16 border-2 border-dashed border-none rounded-2xl">
               <div className="text-4xl mb-3">⚡</div>
               <p className="text-sm font-medium text-gray-500 mb-1">No automation rules yet</p>
               <p className="text-xs text-gray-400 mb-5">Create your first rule to automate customer responses</p>
