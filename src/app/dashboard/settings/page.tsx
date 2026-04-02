@@ -95,7 +95,7 @@ function GeneralTab() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-1">General Settings</h2>
+        <h2 className="text-2xl font-semibold text-gray-900 mb-1">General Settings</h2>
         <p className="text-sm text-gray-400">Manage your workspace preferences</p>
       </div>
       <div className="bg-white rounded-2xl border border-gray-100 p-6 space-y-5">
@@ -176,7 +176,7 @@ function IntegrationsTab() {
   return (
     <div className="max-w-3xl space-y-6">
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-1">Integrations</h2>
+        <h2 className="text-2xl font-semibold text-gray-900 mb-1">Integrations</h2>
         <p className="text-sm text-gray-400">Connect your channels and third-party services</p>
       </div>
 
@@ -215,7 +215,7 @@ function AISettingsTab() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-1">Configure your channel settings</h2>
+        <h2 className="text-2xl font-semibold text-gray-900 mb-1">Configure your channel settings</h2>
         <p className="text-sm text-gray-400">Customize how your AI handles customer conversations on this channel</p>
       </div>
 
@@ -305,7 +305,7 @@ function TeamMembersTab() {
     <div className="max-w-3xl space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-1">Team Members</h2>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-1">Team Members</h2>
           <p className="text-sm text-gray-400">Manage your team and their permissions</p>
         </div>
         <button className="bg-[#14A085] hover:bg-[#0d7a65] text-white font-semibold rounded-xl px-5 py-2.5 text-sm transition-colors flex items-center gap-2">
@@ -351,7 +351,7 @@ function APIKeysTab() {
     <div className="max-w-3xl space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-1">API Keys</h2>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-1">API Keys</h2>
           <p className="text-sm text-gray-400">Manage your API credentials for backend integration</p>
         </div>
         <button className="bg-[#14A085] hover:bg-[#0d7a65] text-white font-semibold rounded-xl px-5 py-2.5 text-sm transition-colors flex items-center gap-2">
@@ -392,7 +392,7 @@ function BillingTab() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-1">Billing</h2>
+        <h2 className="text-2xl font-semibold text-gray-900 mb-1">Billing</h2>
         <p className="text-sm text-gray-400">Manage your plan and payment details</p>
       </div>
       <div className="bg-white rounded-2xl border border-gray-100 p-6">
@@ -432,7 +432,7 @@ function NotificationsTab() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-1">Notifications</h2>
+        <h2 className="text-2xl font-semibold text-gray-900 mb-1">Notifications</h2>
         <p className="text-sm text-gray-400">Choose when and how you receive alerts</p>
       </div>
       <div className="bg-white rounded-2xl border border-gray-100 divide-y divide-gray-50">
@@ -464,14 +464,14 @@ const TAB_COMPONENTS: Record<string, React.FC> = {
 };
 
 export default function SettingsPage() {
-  const [activeTab, setActiveTab] = useState("Integrations");
+  const [activeTab, setActiveTab] = useState("General");
   const ActiveComponent = TAB_COMPONENTS[activeTab] || GeneralTab;
 
   return (
-    <div className="flex h-screen bg-[#F8FAFC] overflow-hidden">
+    <div className="flex h-screen gap-16 bg-[#F8FAFC] overflow-hidden">
       <Sidebar />
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 w-[40%] mt-10 overflow-hidden">
         {/* Settings sub-nav */}
         <nav className="w-48 flex-shrink-0 bg-white border-r border-gray-100 pt-8 px-3">
           <div className="space-y-0.5">
@@ -492,7 +492,7 @@ export default function SettingsPage() {
         </nav>
 
         {/* Content */}
-        <main className="flex-1 overflow-y-auto px-8 py-8">
+        <main className="flex-1 ml-12 overflow-y-auto px-8 py-8">
           <ActiveComponent />
         </main>
       </div>

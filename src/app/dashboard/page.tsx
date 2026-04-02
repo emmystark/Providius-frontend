@@ -33,16 +33,16 @@ const STATS = [
 ];
 
 /* SVG area chart data */
-const TREND = [320, 380, 360, 500, 490, 520, 490];
-const DAYS  = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-const W = 460, H = 140, PAD = 10;
-const maxV = Math.max(...TREND);
-const pts = TREND.map((v, i) => ({
-  x: PAD + (i / (TREND.length - 1)) * (W - PAD * 2),
-  y: PAD + (1 - v / maxV) * (H - PAD * 2),
-}));
-const polyline = pts.map((p) => `${p.x},${p.y}`).join(" ");
-const area = `${pts[0].x},${H} ${polyline} ${pts[pts.length-1].x},${H}`;
+// const TREND = [320, 380, 360, 500, 490, 520, 490];
+// const DAYS  = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+// const W = 460, H = 140, PAD = 10;
+// const maxV = Math.max(...TREND);
+// const pts = TREND.map((v, i) => ({
+//   x: PAD + (i / (TREND.length - 1)) * (W - PAD * 2),
+//   y: PAD + (1 - v / maxV) * (H - PAD * 2),
+// }));
+// const polyline = pts.map((p) => `${p.x},${p.y}`).join(" ");
+// const area = `${pts[0].x},${H} ${polyline} ${pts[pts.length-1].x},${H}`;
 
 const INTENTS = [
   { label: "Order Status",    pct: 42, color: "#14A085" },
@@ -80,6 +80,36 @@ const ACTIVITY = [
     icon: <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="#6366F1" strokeWidth="2" strokeLinecap="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="#6366F1" strokeWidth="2" strokeLinecap="round"/></svg>,
   },
 ];
+
+
+
+
+
+const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+// Sample data - make this dynamic from your API/state
+const rawData = [480, 520, 505, 580, 575, 600, 580]; // values for each day
+
+const W = 700;
+const H = 260;
+const PAD = 40;
+
+// Calculate points dynamically
+const maxValue = Math.max(...rawData, 600); // or hardcode 600 if you want fixed scale
+
+const dataPoints = rawData.map((value, i) => {
+  const x = PAD + (i / (rawData.length - 1)) * (W - PAD * 1.8);
+  const y = PAD + ((maxValue - value) / maxValue) * (H - PAD * 2);
+  return { x, y };
+});
+
+const linePoints = dataPoints.map((p) => `${p.x},${p.y}`).join(" ");
+
+const areaPoints = [
+  `${dataPoints[0].x},${H - PAD}`,
+  ...dataPoints.map((p) => `${p.x},${p.y}`),
+  `${dataPoints[dataPoints.length - 1].x},${H - PAD}`,
+].join(" ");
 
 export default function DashboardPage() {
    const { text: greetingText, emoji } = useGreeting("Stark");
@@ -128,75 +158,100 @@ export default function DashboardPage() {
           </div>
 
           {/* Charts row */}
-          <div className="grid grid-cols-4 gap-5">
-            {/* Conversation Trends */}
-            <div className="col-span-2 bg-white rounded-2xl border border-gray-100 p-6">
-              <h3 className="font-semibold text-gray-900 text-base mb-5">Conversation Trends</h3>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+  {/* Conversation Trends - Dynamic Area Chart */}
+  <div className="bg-white rounded-2xl border border-gray-100 p-6">
+    <h3 className="font-semibold text-gray-900 text-base mb-6">Conversation Trends</h3>
 
-              {/* Y-axis labels + chart */}
-              <div className="flex gap-3">
-                <div className="flex flex-col justify-between text-xs text-gray-300 text-right pr-2 pb-6" style={{height: 260}}>
-                  {[600,500,400,300,200,100,0].map((v) => (
-                    <span key={v}>{v}</span>
-                  ))}
-                </div>
-                <div className="flex-1">
-                  <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{height: 130}}>
-                    <defs>
-                      <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#14A085" stopOpacity="0.25"/>
-                        <stop offset="100%" stopColor="#14A085" stopOpacity="0.02"/>
-                      </linearGradient>
-                    </defs>
-                    {/* Grid lines */}
-                    {[0,1,2,3,4,5,6].map((i) => (
-                      <line
-                        key={i}
-                        x1={PAD} y1={PAD + (i/6)*(H-PAD*2)}
-                        x2={W-PAD} y2={PAD + (i/6)*(H-PAD*2)}
-                        stroke="#f1f5f9" strokeWidth="1"
-                      />
-                    ))}
-                    {/* Area fill */}
-                    <polygon points={area} fill="url(#areaGrad)"/>
-                    {/* Line */}
-                    <polyline points={polyline} fill="none" stroke="#14A085" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    {/* Dots */}
-                    {pts.map((p, i) => (
-                      <circle key={i} cx={p.x} cy={p.y} r="4" fill="white" stroke="#14A085" strokeWidth="2"/>
-                    ))}
-                  </svg>
-                  {/* X-axis labels */}
-                  <div className="flex justify-between mt-28 px-1">
-                    {DAYS.map((d) => (
-                      <span key={d} className="text-xs text-gray-400">{d}</span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+    <div className="relative">
+      {/* Chart Container */}
+      <div className="h-[260px] relative">
+        <svg viewBox="0 0 700 260" className="w-full h-full">
+          <defs>
+            <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#14A085" stopOpacity="0.25" />
+              <stop offset="100%" stopColor="#14A085" stopOpacity="0.02" />
+            </linearGradient>
+          </defs>
 
-            {/* Top Intents */}
-            <div className="bg-white rounded-2xl col-span-2 border border-gray-100 p-6">
-              <h3 className="font-semibold text-gray-900 text-base mb-5">Top Intents</h3>
-              <div className="space-y-4">
-                {INTENTS.map(({ label, pct }) => (
-                  <div key={label}>
-                    <div className="flex justify-between text-md mb-1.5">
-                      <span className="text-gray-700 font-medium">{label}</span>
-                      <span className="text-[#F7FAFC]0 font-medium">{pct}%</span>
-                    </div>
-                    <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-[#14B8A6] transition-all duration-500"
-                        style={{ width: `${pct}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+          {/* Horizontal Grid Lines */}
+          {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+            <line
+              key={i}
+              x1="40"
+              y1={20 + (i / 6) * 200}
+              x2="680"
+              y2={20 + (i / 6) * 200}
+              stroke="#f1f5f9"
+              strokeWidth="1"
+            />
+          ))}
+
+          {/* Area under the curve */}
+          <polygon points={areaPoints} fill="url(#areaGrad)" />
+
+          {/* Main Line */}
+          <polyline
+            points={linePoints}
+            fill="none"
+            stroke="#14A085"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+
+          {/* Data Points (dots) */}
+          {dataPoints.map((point, i) => (
+            <circle
+              key={i}
+              cx={point.x}
+              cy={point.y}
+              r="4"
+              fill="white"
+              stroke="#14A085"
+              strokeWidth="2.5"
+            />
+          ))}
+        </svg>
+
+        {/* Y-axis labels */}
+        <div className="absolute left-0 top-5 bottom-8 w-10 flex flex-col justify-between text-right text-xs text-gray-400 pr-3 pointer-events-none">
+          {[600, 500, 400, 300, 200, 100, 0].map((value) => (
+            <span key={value}>{value}</span>
+          ))}
+        </div>
+      </div>
+
+      {/* X-axis labels */}
+      <div className="flex justify-between mt-2 px-10 text-xs text-gray-400">
+        {DAYS.map((day, i) => (
+          <span key={i}>{day}</span>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  {/* Top Intents - unchanged but improved spacing */}
+  <div className="bg-white rounded-2xl border border-gray-100 p-6">
+    <h3 className="font-semibold text-gray-900 text-base mb-5">Top Intents</h3>
+    <div className="space-y-5">
+      {INTENTS.map(({ label, pct }) => (
+        <div key={label}>
+          <div className="flex justify-between text-sm mb-1.5">
+            <span className="text-gray-700 font-medium">{label}</span>
+            <span className="font-medium text-gray-600">{pct}%</span>
           </div>
+          <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
+            <div
+              className="h-full rounded-full bg-[#14B8A6] transition-all duration-700"
+              style={{ width: `${pct}%` }}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
 
           {/* Recent Activity */}
           <div className="bg-white rounded-2xl border border-gray-100 p-6">

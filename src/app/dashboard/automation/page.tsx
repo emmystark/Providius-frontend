@@ -264,7 +264,7 @@ export default function AutomationPage() {
 
           {/* Empty state */}
           {rules.length === 0 && (
-            <div className="text-center py-16 border-2 border-dashed border-none rounded-2xl">
+            <div className="text-center py-16 border-2 border-dashed rounded-2xl">
               <div className="text-4xl mb-3">⚡</div>
               <p className="text-sm font-medium text-gray-500 mb-1">No automation rules yet</p>
               <p className="text-xs text-gray-400 mb-5">Create your first rule to automate customer responses</p>
