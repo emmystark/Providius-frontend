@@ -19,25 +19,58 @@ export default function RuleDetailPage() {
   const [method, setMethod]         = useState("POST");
   const [saved, setSaved]           = useState(false);
 
+
+   const [menuOpen, setMenuOpen] = useState<boolean>(false);
+
   const save = () => { setSaved(true); setTimeout(() => setSaved(false), 2000); };
 
+
+
+
+  const testRule = () => {
+  // TODO: Implement your test logic here
+  // console.log("Testing current rule...");
+  // alert("Rule test started! (Check console for details)");
+  
+  // Example real implementation:
+  // fetch('/api/rules/test', {
+  //   method: 'POST',
+  //   body: JSON.stringify({ intent: intentName, apiUrl, method })
+  // });
+
+  router.push("/dashboard/automation/rules/test");
+
+};
+
+const deleteRule = () => {
+  if (!confirm("Are you sure you want to delete this rule?")) return;
+
+  // console.log("Deleting current rule...");
+  alert("Rule deleted successfully!");
+
+  // Redirect back to rules list after deletion
+  router.push("/dashboard/automation");
+};
+
+
   return (
-    <div className="flex h-screen bg-[#F8FAFC] overflow-hidden">
+    <div className="flex h-screen gap-8 bg-[#F8FAFC] overflow-hidden">
       <Sidebar />
 
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto mt-10">
         {/* Top bar */}
-        <header className="bg-white border-b border-gray-100 px-8 py-4 flex items-center justify-between sticky top-0 z-10">
+        <header className="bg-none backdrop-blur-sm sticky  border-none px-8 py-4 flex items-center justify-between top-0 z-10">
           <div className="flex items-center gap-4">
-            <button onClick={() => router.back()} className="text-gray-400 hover:text-gray-600 transition-colors">
+            {/* <button onClick={() => router.back()} className="text-gray-400 hover:text-gray-600 transition-colors">
               <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
                 <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-            </button>
-            <h1 className="text-xl font-bold text-gray-900">Rule details</h1>
+            </button> */}
+            <h1 className="text-2xl text-gray-900">Rule details</h1>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-sm text-gray-600 font-medium">Activate</span>
+            <div className="bg-white p-4 px-7 items-center flex gap-4 rounded-full">
+              <span className="text-sm text-gray-600 font-bold">Activate</span>
             <button
               type="button"
               onClick={() => setActive((v) => !v)}
@@ -45,21 +78,67 @@ export default function RuleDetailPage() {
             >
               <span className={`inline-block h-5 w-5 rounded-full bg-white shadow-md transform transition-transform duration-200 mt-0.5 ${active ? "translate-x-5" : "translate-x-0.5"}`} />
             </button>
+            </div>
             <button
               onClick={save}
-              className="bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-xl px-5 py-2 text-sm transition-colors"
+              className="bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-xl px-6 py-4 text-sm transition-colors"
             >
               {saved ? "✓ Saved" : "Save & Publish"}
             </button>
-            <button className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 border border-gray-200 rounded-lg">
-              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
-                <circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/>
-              </svg>
-            </button>
+            {/* More Options Button */}
+{/* More Options Button */}
+<button
+  onClick={(e) => {
+    e.stopPropagation();
+    setMenuOpen(menuOpen ? null : "open");   // Simple boolean toggle since there's only one rule
+  }}
+  className="w-10 h-10 flex items-center justify-center relative left-[-15px] text-gray-400 border border-none rounded-lg hover:bg-none transition-colors"
+>
+  <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+    <circle cx="12" cy="5" r="1.5" />
+    <circle cx="12" cy="12" r="1.5" />
+    <circle cx="12" cy="19" r="1.5" />
+  </svg>
+</button>
+
+{/* Dropdown Menu */}
+{menuOpen && (
+  <div
+    className="absolute right-0 top-12 bg-white border border-gray-200 rounded-xl shadow-lg py-1 z-30 min-w-[170px]"
+    onClick={(e) => e.stopPropagation()}
+  >
+    <button
+      onClick={() => {
+        testRule();           // No parameter needed
+        setMenuOpen(false);
+      }}
+      className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3 transition-colors"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 4.01V8" />
+      </svg>
+      Test rule
+    </button>
+
+    <button
+      onClick={() => {
+        deleteRule();         // No parameter needed
+        setMenuOpen(false);
+      }}
+      className="w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.595 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.595-1.858L5 7m5 4v6m4-6v6m1-10V9a1 1 0 00-1 1v1M12 4v6m2-2v2" />
+      </svg>
+      Delete rule
+    </button>
+  </div>
+)}
           </div>
         </header>
 
-        <div className="px-8 py-6 space-y-5 max-w-4xl">
+        <div className="px-8 py-6 space-y-5 w-[98%]">
 
           {/* When (Trigger) */}
           <div className="bg-white rounded-2xl border border-gray-100 p-6">
@@ -168,7 +247,7 @@ export default function RuleDetailPage() {
           </div>
 
           {/* Execution Logs */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-6">
+          <div className="bg-white rounded-2xl border-gray-100 p-6">
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-base font-semibold text-gray-900">Execution Logs</h2>
               <button className="text-sm font-medium text-gray-500 hover:text-gray-700 border border-gray-200 rounded-lg px-3 py-1.5 transition-colors">
@@ -177,7 +256,7 @@ export default function RuleDetailPage() {
             </div>
 
             {/* Table */}
-            <div className="overflow-x-auto">
+            <div className="overflow-y-scroll border-none overflow-x-hidden">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-100">

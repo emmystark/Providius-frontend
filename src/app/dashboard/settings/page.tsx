@@ -1,9 +1,10 @@
 "use client";
 import { useState } from "react";
 import Sidebar from "@/components/Sidebar";
+import { useRouter } from "next/navigation";
 
 /* ── Sub-nav tabs ── */
-const TABS = ["General", "Integrations", "Team Members", "Billing", "API Keys", "Notifications"];
+const TABS = ["General", "Integrations", "Team Members", "Billing", "API Keys", "Appearance", "Notifications"];
 
 /* ── Integrations data ── */
 interface Integration {
@@ -138,6 +139,7 @@ function GeneralTab() {
 
 /* ── Integrations tab ── */
 function IntegrationsTab() {
+
   const [comm, setComm]   = useState<Integration[]>(COMM_CHANNELS);
   const [crm, setCrm]     = useState<Integration[]>(CRM_TOOLS);
 
@@ -146,6 +148,10 @@ function IntegrationsTab() {
 
   const toggleCrm = (id: string) =>
     setCrm((p) => p.map((i) => i.id === id ? { ...i, status: i.status === "connected" ? "disconnected" : "connected" } : i));
+
+
+  const router = useRouter();
+
 
   const IntegrationRow = ({ item, onToggle }: { item: Integration; onToggle: (id: string) => void }) => (
     <div className="flex items-center justify-between py-4 border-b border-gray-50 last:border-none">
@@ -160,7 +166,7 @@ function IntegrationsTab() {
         </div>
       </div>
       {item.status === "connected" ? (
-        <button onClick={() => onToggle(item.id)}
+        <button onClick={() => router.push("/dashboard/settings/configure")}
           className="text-sm font-medium text-gray-500 hover:text-gray-700 border border-gray-200 rounded-lg px-4 py-1.5 transition-colors hover:border-gray-300">
           Configure
         </button>
@@ -415,6 +421,241 @@ function BillingTab() {
   );
 }
 
+
+
+
+/* ── Appearance tab ── */
+function AppearanceTab() {
+  const [theme, setTheme]         = useState<"Light" | "Dark" | "System">("Light");
+  const [density, setDensity]     = useState<"Comfortable" | "Compact">("Comfortable");
+  const [langOpen, setLangOpen]   = useState(false);
+  const [language, setLanguage]   = useState({ label: "English (US)", sub: "Primary language" });
+  const [timeFormat, setTime]     = useState<"12h" | "24h">("12h");
+  const [saved, setSaved]         = useState(false);
+
+  const LANGUAGES = [
+    { label: "English (US)", sub: "Primary language" },
+    { label: "French",       sub: "Français" },
+    { label: "Spanish",      sub: "Español" },
+    { label: "Arabic",       sub: "العربية" },
+    { label: "Yoruba",       sub: "Yorùbá" },
+  ];
+
+  const save = () => { setSaved(true); setTimeout(() => setSaved(false), 2000); };
+
+  return (
+    <div className="max-w-2xl space-y-10">
+      <div>
+        <h2 className="text-2xl font-bold text-gray-900 mb-0.5">Appearance</h2>
+        <p className="text-sm text-gray-400">Connect your channels and third-party services</p>
+      </div>
+
+      {/* ── Theme ── */}
+      <section>
+        <p className="text-sm font-semibold text-gray-900 mb-1">Theme</p>
+        <p className="text-xs text-gray-400 mb-4">Select your preferred color scheme</p>
+        <div className="flex items-start gap-5">
+          {(["Light", "Dark", "System"] as const).map((t) => {
+            const active = theme === t;
+            return (
+              <button
+                key={t}
+                onClick={() => setTheme(t)}
+                className={`flex flex-col items-center gap-2 p-4 rounded-2xl border-2 w-28 transition-all ${
+                  active ? "border-[#14A085] bg-white" : "border-gray-100 bg-gray-50 hover:border-gray-200"
+                }`}
+              >
+                {t === "Light" && (
+                  <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="4" stroke={active ? "#14A085" : "#9CA3AF"} strokeWidth="1.8"/>
+                    <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+                      stroke={active ? "#14A085" : "#9CA3AF"} strokeWidth="1.8" strokeLinecap="round"/>
+                  </svg>
+                )}
+                {t === "Dark" && (
+                  <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
+                    <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"
+                      stroke={active ? "#14A085" : "#9CA3AF"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                )}
+                {t === "System" && (
+                  <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
+                    <rect x="2" y="3" width="20" height="14" rx="2" stroke={active ? "#14A085" : "#9CA3AF"} strokeWidth="1.8"/>
+                    <path d="M8 21h8M12 17v4" stroke={active ? "#14A085" : "#9CA3AF"} strokeWidth="1.8" strokeLinecap="round"/>
+                  </svg>
+                )}
+                <span className={`text-sm font-medium ${active ? "text-[#14A085]" : "text-gray-400"}`}>{t}</span>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ── Density ── */}
+      <section>
+        <p className="text-sm font-semibold text-gray-900 mb-1">Density</p>
+        <p className="text-xs text-gray-400 mb-4">Adjust the spacing between elements</p>
+        <div className="flex gap-3 mb-4">
+          {(["Comfortable", "Compact"] as const).map((d) => (
+            <button
+              key={d}
+              onClick={() => setDensity(d)}
+              className={`px-5 py-2.5 rounded-xl text-sm font-semibold border-2 transition-all ${
+                density === d
+                  ? "bg-[#14A085] border-[#14A085] text-white"
+                  : "bg-white border-gray-200 text-gray-500 hover:border-gray-300"
+              }`}
+            >
+              {d}
+            </button>
+          ))}
+        </div>
+        <div className="flex items-start gap-2.5 bg-gray-50 border border-gray-100 rounded-xl px-4 py-3">
+          <svg className="flex-shrink-0 mt-0.5" width="14" height="14" fill="none" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" stroke="#9CA3AF" strokeWidth="1.8"/>
+            <path d="M12 8v4M12 16h.01" stroke="#9CA3AF" strokeWidth="1.8" strokeLinecap="round"/>
+          </svg>
+          <p className="text-xs text-gray-500 leading-relaxed">
+            <span className="font-semibold text-gray-700">Comfortable</span> spacing provides more breathing room between elements, ideal for larger displays.
+            <span className="font-semibold text-gray-700"> Compact</span> reduces spacing to show more content on screen.
+          </p>
+        </div>
+      </section>
+
+      {/* ── Language ── */}
+      <section>
+        <p className="text-sm font-semibold text-gray-900 mb-1">Language</p>
+        <p className="text-xs text-gray-400 mb-4">Select your preferred language</p>
+        <div className="relative">
+          <button
+            onClick={() => setLangOpen((v) => !v)}
+            className="w-full flex items-center justify-between border border-gray-200 rounded-xl px-4 py-3.5 bg-white hover:border-gray-300 transition-colors"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-[#E6F7F4] flex items-center justify-center flex-shrink-0">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
+                  <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="#14A085" strokeWidth="1.8"/>
+                  <path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" stroke="#14A085" strokeWidth="1.8"/>
+                </svg>
+              </div>
+              <div className="text-left">
+                <p className="text-sm font-semibold text-gray-900">{language.label}</p>
+                <p className="text-xs text-gray-400">{language.sub}</p>
+              </div>
+            </div>
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24"
+              className={`text-gray-400 transition-transform ${langOpen ? "rotate-180" : ""}`}>
+              <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+          {langOpen && (
+            <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden z-10">
+              {LANGUAGES.map((l) => (
+                <button
+                  key={l.label}
+                  onClick={() => { setLanguage(l); setLangOpen(false); }}
+                  className="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors text-left"
+                >
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">{l.label}</p>
+                    <p className="text-xs text-gray-400">{l.sub}</p>
+                  </div>
+                  {language.label === l.label && (
+                    <svg className="text-[#14A085]" width="14" height="14" fill="none" viewBox="0 0 24 24">
+                      <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ── Time Format ── */}
+      <section>
+        <p className="text-sm font-semibold text-gray-900 mb-1">Time Format</p>
+        <p className="text-xs text-gray-400 mb-4">Choose how times are displayed</p>
+        <div className="space-y-2">
+          {([
+            { id: "12h", label: "12-Hour", example: "e.g., 2:30 PM" },
+            { id: "24h", label: "24-Hour", example: "e.g., 14:30" },
+          ] as const).map((f) => {
+            const active = timeFormat === f.id;
+            return (
+              <button
+                key={f.id}
+                onClick={() => setTime(f.id)}
+                className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl border-2 transition-all text-left ${
+                  active ? "border-[#14A085] bg-white" : "border-gray-100 bg-gray-50 hover:border-gray-200"
+                }`}
+              >
+                <span className={`text-xs font-bold w-7 flex-shrink-0 ${active ? "text-[#14A085]" : "text-gray-400"}`}>
+                  {f.id}
+                </span>
+                <div className="flex-1">
+                  <p className={`text-sm font-semibold ${active ? "text-gray-900" : "text-gray-500"}`}>{f.label}</p>
+                  <p className="text-xs text-gray-400">{f.example}</p>
+                </div>
+                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
+                  active ? "border-[#14A085] bg-[#14A085]" : "border-gray-300"
+                }`}>
+                  {active && (
+                    <svg width="10" height="10" fill="none" viewBox="0 0 24 24">
+                      <path d="M5 13l4 4L19 7" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  )}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ── Automation Active preview card ── */}
+      <section>
+        <div className="border border-gray-100 rounded-2xl p-5 bg-gray-50">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-xl bg-[#E6F7F4] flex items-center justify-center flex-shrink-0">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="3" stroke="#14A085" strokeWidth="1.8"/>
+                <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"
+                  stroke="#14A085" strokeWidth="1.8" strokeLinecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-gray-900">Automation Active</p>
+              <p className="text-xs text-gray-400">
+                Last triggered at {timeFormat === "12h" ? "2:30 PM" : "14:30"}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center justify-between text-xs text-gray-500 mb-2">
+            <span>Progress</span>
+            <span className="font-semibold">75%</span>
+          </div>
+          <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div className="h-full bg-[#14A085] rounded-full" style={{ width: "75%" }} />
+          </div>
+        </div>
+      </section>
+
+      {/* Save */}
+      <div className="flex justify-end pt-2 pb-8">
+        <button
+          onClick={save}
+          className="bg-[#14A085] hover:bg-[#0d7a65] text-white font-semibold rounded-xl px-8 py-3 text-sm transition-colors"
+        >
+          {saved ? "✓ Saved" : "Save Changes"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+
+
+
 /* ── Notifications tab ── */
 function NotificationsTab() {
   const [prefs, setPrefs] = useState({
@@ -460,6 +701,7 @@ const TAB_COMPONENTS: Record<string, React.FC> = {
   "Team Members": TeamMembersTab,
   Billing: BillingTab,
   "API Keys": APIKeysTab,
+  Appearance: AppearanceTab,
   Notifications: NotificationsTab,
 };
 

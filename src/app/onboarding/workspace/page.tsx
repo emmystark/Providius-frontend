@@ -23,7 +23,7 @@ export default function WorkspacePage() {
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex items-start justify-center pt-16 pb-16 px-4">
       <form action="/onboarding/channels">
-        <div className="w-full max-w-[750px] bg-[#F8FAFC] rounded-2xl  mt-4 mr-28 border-gray-100 px-12 py-12">
+        <div className=" w-[58%] lg:w-[100%] lg:ml-0 ml-56 lg:max-w-[750px] bg-[#F8FAFC] rounded-2xl  mt-4 lg:mr-28 border-gray-100 px-12 py-12">
         <Stepper current={2} />
 
         <div className="center ml-10">

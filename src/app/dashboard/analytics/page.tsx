@@ -50,7 +50,7 @@ export default function AnalyticsPage() {
   };
 
   return (
-   <div className="flex gap-5 h-screen bg-[#F7FAFC]">
+   <div className="flex gap-5 h-[100vh] overflow-hidden  bg-[#F7FAFC]">
       <Sidebar />
 
 
@@ -151,13 +151,13 @@ export default function AnalyticsPage() {
         </div>
       )}
 
-      <div className="mt-10  w-[79%] overflow-y-auto">
+      <div className="mt-10  w-[79%] ">
 
 
       <main className="flex-1   px-6 lg:px-10 py-8">
         {/* Header */}
 
-        <div className=" flex items-start justify-between mb-6 flex-wrap gap-3">
+        <div className="bg-none backdrop-blur-sm sticky  flex items-start justify-between mb-6 flex-wrap gap-3">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Analytics</h1>
             <p className="text-sm text-gray-400 mt-0.5">Track your AI assistant performance and customer insights</p>
@@ -178,7 +178,8 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Row 1 — two charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
+        <div className="overflow-y-auto h-[100vh] pb-48">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5 ">
 
           {/* Resolution Rate Over Time */}
           <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
@@ -360,6 +361,7 @@ export default function AnalyticsPage() {
               </div>
             ))}
           </div>
+        </div>
         </div>
       </main>
         </div>

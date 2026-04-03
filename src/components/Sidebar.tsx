@@ -25,6 +25,12 @@ const isNavActive = (href: string, currentPath: string): boolean => {
   if (href === "/dashboard/knowledge-base") {
     return currentPath === href || currentPath.startsWith(href + "/");
   }
+  if (href === "/dashboard/automation") {
+    return currentPath === href || currentPath.startsWith(href + "/");
+  }
+  if (href === "/dashboard/settings") {
+    return currentPath === href || currentPath.startsWith(href + "/");
+  }
   return currentPath === href;
 };
 
