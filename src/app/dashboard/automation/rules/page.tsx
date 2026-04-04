@@ -54,7 +54,7 @@ export default function RuleDetailPage() {
 
 
   return (
-    <div className="flex h-screen gap-10 bg-[#F7FAFC] dark:bg-gray-950 dark:bg-gray-950 overflow-hidden transition-colors duration-200">
+    <div className="flex h-screen gap-10 bg-[#F7FAFC] dark:bg-gray-950 overflow-hidden transition-colors duration-200">
       <Sidebar />
 
       <main className="flex-1 overflow-y-auto mt-10">

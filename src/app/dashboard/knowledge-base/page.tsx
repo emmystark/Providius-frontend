@@ -132,11 +132,11 @@ function IndexingCompleteModal({ onClose }: { onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px]" onClick={onClose} />
-      <div className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl dark:shadow-2xl transition-colors duration-200 w-full max-w-[590px] mx-4 p-24 text-center transition-colors duration-200">
+      <div className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl dark:shadow-2xl w-full max-w-[590px] mx-4 p-24 text-center transition-colors duration-200">
         <div className="w-14 h-14 rounded-full border-2 border-emerald-600 dark:border-emerald-600 flex items-center justify-center mx-auto mb-5 transition-colors">
           <Check size={28} className="text-emerald-600 dark:text-emerald-600" strokeWidth={2.5} />
         </div>
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-200 transition-colors">Indexing Complete</h3>
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 duration-200 transition-colors">Indexing Complete</h3>
         <p className="text-sm text-gray-400 dark:text-gray-500 mb-7 leading-relaxed transition-colors">
           Your document has been indexed successfully and is now ready for AI queries.
         </p>
