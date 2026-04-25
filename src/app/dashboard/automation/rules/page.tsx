@@ -29,11 +29,8 @@ export default function RuleDetailPage() {
 
 
   const handleBack = () => {
-  if (window.history.length > 1) {
-    router.back();
-  } else {
-    router.push('/dashboard/automation'); // or wherever you want to go
-  }
+    router.refresh()
+ 
 };
 
 

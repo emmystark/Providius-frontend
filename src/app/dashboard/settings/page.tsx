@@ -2,7 +2,6 @@
 import { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import { useRouter } from "next/navigation";
-
 import { useTheme } from "@/components/ThemeProvider";
 import MobileNav from "@/components/MobileNav";
 
@@ -434,11 +433,10 @@ function TeamMembersTab() {
         </button>
       </div>
  
-      <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden divide-y divide-gray-50 dark:divide-gray-800">
+      <div className="bg-white dark:bg-gray-950 border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden divide-y divide-gray-50 dark:divide-gray-800">
         {members.map((m) => (
           <div key={m.email} className="flex items-center justify-between px-4 py-4">
             <div className="flex items-center gap-3 min-w-0">
-              {/* Avatar circle with initials */}
               <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 ${m.color}`}>
                 {m.avatar}
               </div>
@@ -481,7 +479,7 @@ function APIKeysTab() {
           <p className="text-sm font-semibold text-gray-900 dark:text-white">Production Key</p>
           <p className="text-xs text-gray-400">Created 2d ago</p>
         </div>
-        <div className="flex items-center justify-between bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-xl px-4 py-3">
+        <div className="flex items-center justify-between bg-white dark:bg-gray-950 border border-gray-100 dark:border-gray-800 rounded-xl px-4 py-3">
           <code className="text-xs text-gray-600 dark:text-gray-300 font-mono">sk_live_51Nz...9×2A</code>
           <button onClick={copy} className="ml-2 text-gray-400 hover:text-[#14A085] transition-colors flex-shrink-0">
             {copied
@@ -493,7 +491,7 @@ function APIKeysTab() {
       </div>
  
       {/* Generate New Key */}
-      <button className="w-full flex items-center justify-center gap-2 border border-gray-200 dark:border-gray-700 rounded-2xl py-4 text-sm text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300 transition-colors bg-white dark:bg-gray-900">
+      <button className="w-full flex items-center justify-center gap-2 border border-gray-200 dark:border-gray-700 rounded-2xl py-4 text-sm text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300 transition-colors bg-white dark:bg-gray-950">
         <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
           <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
           <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -525,7 +523,7 @@ function BillingTab() {
       {/* Payment Method */}
       <div>
         <p className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Payment Method</p>
-        <div className="flex items-center justify-between bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl px-4 py-3.5">
+        <div className="flex items-center justify-between bg-white dark:bg-gray-950 border border-gray-100 dark:border-gray-800 rounded-2xl px-4 py-3.5">
           <div className="flex items-center gap-3">
             {/* Mastercard logo */}
             <div className="flex flex-shrink-0">
@@ -544,7 +542,7 @@ function BillingTab() {
       {/* Recent Invoices */}
       <div>
         <p className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Recent Invoices</p>
-        <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl divide-y divide-gray-50 dark:divide-gray-800">
+        <div className="bg-white dark:bg-gray-950 border border-gray-100 dark:border-gray-800 rounded-2xl divide-y divide-gray-50 dark:divide-gray-800">
           {[
             { date: "Oct 12, 2023", inv: "INV-0042", amount: "$49.00" },
             { date: "Sep 12, 2023", inv: "INV-0041", amount: "$49.00" },
@@ -575,7 +573,6 @@ function BillingTab() {
 
 /* ── Appearance tab ── */
 function AppearanceTab() {
-  // const [theme, setTheme]         = useState<"Light" | "Dark" | "System">("Light");
   const [density, setDensity]     = useState<"Comfortable" | "Compact">("Comfortable");
   const [langOpen, setLangOpen]   = useState(false);
   const [language, setLanguage]   = useState({ label: "English (US)", sub: "Primary language" });
@@ -845,7 +842,7 @@ function NotificationsTab() {
       {/* Email Notifications */}
       <div>
         <p className="text-xs font-semibold text-[#14A085] uppercase tracking-wider mb-3">Email Notifications</p>
-        <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl px-4">
+        <div className="bg-white dark:bg-gray-950 border border-gray-100 dark:border-gray-800 rounded-2xl px-4">
           <Row label="Weekly Analytics" desc="Receive a summary of rule performance" value={prefs.weeklyAnalytics} onToggle={() => toggle("weeklyAnalytics")} />
           <Row label="Security Alerts"  desc="New login or API key generation"        value={prefs.securityAlerts}  onToggle={() => toggle("securityAlerts")} />
         </div>
@@ -854,7 +851,7 @@ function NotificationsTab() {
       {/* Push Notifications */}
       <div>
         <p className="text-xs font-semibold text-[#14A085] uppercase tracking-wider mb-3">Push Notifications</p>
-        <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl px-4">
+        <div className="bg-white dark:bg-gray-950 border border-gray-100 dark:border-gray-800 rounded-2xl px-4">
           <Row label="Escalations"      desc="Alerts when AI escalates to human"         value={prefs.escalations}     onToggle={() => toggle("escalations")} />
           <Row label="Resolved"         desc="Alert when ticket is resolved"              value={prefs.resolved}        onToggle={() => toggle("resolved")} />
           <Row label="Low AI Confidence" desc="Alert when confidence drops below threshold" value={prefs.lowConfidence} onToggle={() => toggle("lowConfidence")} />
@@ -879,12 +876,8 @@ const TAB_COMPONENTS: Record<string, React.FC> = {
 };
 
 export default function SettingsPage() {
-  const [activeTab, setActiveTab] = useState("");
-  const ActiveComponent = TAB_COMPONENTS[activeTab] || GeneralTab;
-
-
-  const router = useRouter();
-
+  const [activeTab, setActiveTab] = useState<string>("");
+  const ActiveComponent = TAB_COMPONENTS[activeTab] ?? GeneralTab;
 
   return (
     <div className="flex h-screen gap-16 bg-[#F1F5F9] dark:bg-gray-950 overflow-hidden transition-colors duration-200">
@@ -914,88 +907,74 @@ export default function SettingsPage() {
         </nav>
 
         {/* Content */}
-        <main className="flex-1 ml-12 overflow-y-auto px-8 py-8 bg-white dark:bg-gray-900 transition-colors duration-200">
+        <main className="flex-1 ml-12 overflow-y-auto px-8 py-8 bg-white dark:bg-gray-950 transition-colors duration-200">
           <ActiveComponent />
         </main>
       </div>
 
       {/* Mobile Layout */}
-     <div className="xl:hidden mt-16 flex flex-col flex-1 overflow-hidden bg-white dark:bg-gray-900 transition-colors duration-200">
- 
-  {activeTab === "" ? (
-    /* ──────────────────────────────────────────────────────
-       SETTINGS HOME SCREEN — full menu list (matches screenshot)
-    ────────────────────────────────────────────────────── */
-    <div className="flex-1 overflow-y-auto">
- 
-      {/* Top bar: logo + icons */}
-      
- 
-      {/* Page title */}
-      <div className="px-5 pt-4 pb-6">
-        <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Settings</h1>
-      </div>
- 
-      {/* Menu items — spaced rows, no card wrapper, no dividers */}
-      <div className="px-5 space-y-1">
-        {MOBILE_MENU.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setActiveTab(item.id)}
-            className="w-full flex items-center gap-4 py-3.5 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-2xl px-2 transition-colors text-left"
-          >
-            {item.icon}
-            <div className="flex-1 min-w-0">
-              <p className="text-[16px] font-bold text-gray-900 dark:text-white leading-loose">
-                {item.label}
-              </p>
-              <p className="text-sm text-gray-400 mt-0.5 leading-snug">
-                {item.sub}
-              </p>
+      <div className="xl:hidden mt-16 flex flex-col flex-1 overflow-hidden bg-white dark:bg-gray-950 transition-colors duration-200">
+
+        {activeTab === "" ? (
+          /* SETTINGS HOME SCREEN */
+          <div className="flex-1 overflow-y-auto">
+            <div className="px-5 pt-4 pb-6">
+              <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Settings</h1>
             </div>
-            <svg
-              width="16" height="16" fill="none" viewBox="0 0 24 24"
-              className="text-gray-300 dark:text-gray-600 flex-shrink-0"
-            >
-              <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
-        ))}
+
+            <div className="px-5 space-y-1">
+              {MOBILE_MENU.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveTab(item.id)}
+                  className="w-full flex items-center gap-4 py-3.5 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-2xl px-2 transition-colors text-left"
+                >
+                  {item.icon}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[16px] font-bold text-gray-900 dark:text-white leading-loose">
+                      {item.label}
+                    </p>
+                    <p className="text-sm text-gray-400 mt-0.5 leading-snug">
+                      {item.sub}
+                    </p>
+                  </div>
+                  <svg
+                    width="16" height="16" fill="none" viewBox="0 0 24 24"
+                    className="text-gray-300 dark:text-gray-600 flex-shrink-0"
+                  >
+                    <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+              ))}
+            </div>
+
+            <div className="h-10" />
+          </div>
+
+        ) : (
+          /* SUB-PAGE */
+          <div className="flex-1 flex flex-col overflow-hidden">
+
+            {/* Header with working back button */}
+            <div className="flex items-center gap-3 px-5 py-4 bg-white dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800 flex-shrink-0">
+              <button
+                onClick={() => setActiveTab("")}
+                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-lg transition-colors"
+                title="Back to Settings"
+              >
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
+                  <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+              <h2 className="text-[17px] font-bold text-gray-900 dark:text-white">{activeTab}</h2>
+            </div>
+
+            <main className="flex-1 overflow-y-auto px-4 py-5 bg-gray-50 dark:bg-gray-950 transition-colors duration-200">
+              <ActiveComponent />
+            </main>
+          </div>
+        )}
       </div>
- 
-      {/* Bottom spacer */}
-      <div className="h-10" />
-    </div>
- 
-  ) : (
-    /* ──────────────────────────────────────────────────────
-       SUB-PAGE — back arrow + title header + content
-    ────────────────────────────────────────────────────── */
-    <div className="flex-1 flex flex-col overflow-hidden">
- 
-      {/* Header */}
-      <div 
-      onClick={() => router.back()}
-      className="flex items-center gap-3 px-5 py-4 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 flex-shrink-0">
-        <button
-          
-          className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-lg transition-colors"
-          title="Back to Settings"
-        >
-          <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
-            <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-        <h2 className="text-[17px] font-bold text-gray-900 dark:text-white">{activeTab}</h2>
-      </div>
- 
-      {/* Scrollable content */}
-      <main className="flex-1 overflow-y-auto px-4 py-5 bg-gray-50 dark:bg-gray-950 transition-colors duration-200">
-        <ActiveComponent />
-      </main>
-    </div>
-  )}
-</div>
     </div>
   );
 }

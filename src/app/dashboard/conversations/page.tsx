@@ -106,7 +106,7 @@ function EscalateModal({
         className="absolute inset-0 bg-black/20 backdrop-blur-[2px]"
         onClick={onClose}
       />
-      <div className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl dark:shadow-2xl w-full max-w-[440px] mx-4 p-8 transition-colors duration-200">
+      <div className="relative bg-white dark:bg-gray-950 rounded-2xl shadow-2xl dark:shadow-2xl w-full max-w-[440px] mx-4 p-8 transition-colors duration-200">
         <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 transition-colors">
           Escalate to Human Agent
         </h3>
@@ -204,10 +204,10 @@ export default function ConversationsPage() {
 
       {/* Conversation list - Mobile: Full width, Desktop: Sidebar */}
       <aside
-        className={`${selectedId ? "hidden xl:flex" : "flex"} xl:flex xl:ml-16 mt-20 px-4 xl:px-0 w-full xl:w-[23%] xl:flex-shrink-0 xl:mt-10 xl:h-[92%] h-full xl:border-r border-gray-100 dark:border-gray-800 flex-col transition-colors duration-200 pb-20 xl:pb-0 bg-white dark:bg-gray-900`}
+        className={`${selectedId ? "hidden xl:flex" : "flex"} xl:flex xl:ml-16 mt-20 px-4 xl:px-0 w-full xl:w-[23%] xl:flex-shrink-0 xl:mt-10 xl:h-[92%] h-full xl:border-r border-gray-100 dark:border-gray-800 flex-col transition-colors duration-200 pb-20 xl:pb-0 bg-white dark:bg-gray-950`}
       >
         {/* Header with Search */}
-        <div className="p-4 xl:p-6 bg-white  dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 flex-shrink-0 transition-colors duration-200">
+        <div className="p-4 xl:p-6 bg-white  dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800 flex-shrink-0 transition-colors duration-200">
           {/* Title and Add Button */}
           <div className="flex items-center justify-between mb-4 gap-2">
             <h2 className="text-2xl xl:text-lg font-bold text-gray-900 dark:text-white">
@@ -312,7 +312,7 @@ export default function ConversationsPage() {
         <div
           className={`${
             selectedId ? "fixed xl:relative" : "hidden xl:flex"
-          } inset-0 xl:ml-16 xl:inset-auto w-full xl:w-[50%] h-full xl:h-[92%] xl:mt-10 bg-white dark:bg-gray-900 transition-colors duration-200 flex flex-col z-40`}
+          } inset-0 xl:ml-16 xl:inset-auto w-full xl:w-[50%] h-full xl:h-[92%] xl:mt-10 bg-white dark:bg-gray-950 transition-colors duration-200 flex flex-col z-40`}
         >
           {/* Mobile Back Button */}
           <div className="xl:hidden px-3 xl:px-4 py-3 border-b border-gray-100 dark:border-gray-800 flex items-center gap-2 flex-shrink-0">
@@ -395,7 +395,7 @@ export default function ConversationsPage() {
         </div>
 
           {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto scrollbar-thin px-3 xl:px-5 xl:px-6 py-3 xl:py-4 xl:py-5 space-y-3 xl:space-y-4 bg-white dark:bg-gray-900 transition-colors duration-200">
+          <div className="flex-1 overflow-y-auto scrollbar-thin px-3 xl:px-5 xl:px-6 py-3 xl:py-4 xl:py-5 space-y-3 xl:space-y-4 bg-white dark:bg-gray-950 transition-colors duration-200">
             {msgs.map((msg, i) => (
               <div
                 key={i}
@@ -433,7 +433,7 @@ export default function ConversationsPage() {
             ))}
           </div>
           {/* Input Area */}
-          <div className="border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 flex-shrink-0 transition-colors duration-200">
+          <div className="border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950 flex-shrink-0 transition-colors duration-200">
             {!escalated && (
               <div className="p-3 xl:p-4 xl:p-5 space-y-2 xl:space-y-3">
                 <div className="flex items-center gap-2 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-900/50 rounded-lg px-3 xl:px-4 py-2 xl:py-2.5 transition-colors">
@@ -513,7 +513,7 @@ export default function ConversationsPage() {
       )}
 
       {/* Bottom Navigation - Mobile Only */}
-      {/* <nav className="xl:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 flex items-center justify-around transition-colors duration-200 z-30 h-20">
+      {/* <nav className="xl:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800 flex items-center justify-around transition-colors duration-200 z-30 h-20">
         <button className="flex flex-col items-center justify-center w-full h-full gap-1 text-gray-400 hover:text-teal-500 dark:text-gray-500 dark:hover:text-teal-400 transition-colors">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <polygon points="12 2 15.09 10.26 24 12.75 18 18.91 19.54 27.88 12 23.77 4.46 27.88 6 18.91 0 12.75 8.91 10.26 12 2" />
